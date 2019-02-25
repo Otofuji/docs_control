@@ -4,9 +4,10 @@ import argparse
 import time
 import logging
 
+
 class MyControllerMap:
     def __init__(self):
-        self.button = {'A': 'L'} # Fast forward (10 seg) pro Youtube
+        self.button = {'A': 'alt','B': '='} # Fast forward (10 seg) pro Youtube
 
 class SerialControllerInterface:
     # Protocolo
@@ -18,8 +19,11 @@ class SerialControllerInterface:
         self.mapping = MyControllerMap()
         self.incoming = '0'
         pyautogui.PAUSE = 0  ## remove delay
-    
+        self.bs = 0
+
+
     def update(self):
+
         ## Sync protocol
         while self.incoming != b'X':
             self.incoming = self.ser.read()
@@ -28,12 +32,21 @@ class SerialControllerInterface:
         data = self.ser.read()
         logging.debug("Received DATA: {}".format(data))
 
-        if data == b'1':
-            logging.info("KEYDOWN A")
+        if data == b'1' and self.bs == 0:
+            logging.info("KEYDOWN A B")
             pyautogui.keyDown(self.mapping.button['A'])
-        elif data == b'0':
-            logging.info("KEYUP A")
+            pyautogui.keyDown(self.mapping.button['B'])
             pyautogui.keyUp(self.mapping.button['A'])
+            pyautogui.keyUp(self.mapping.button['B'])
+            self.bs = 200
+
+        else:
+            if self.bs > 0:
+                self.bs = self.bs-1
+#            logging.info("KEYUP A")
+#            pyautogui.keyUp(self.mapping.button['A'])
+#            pyautogui.keyUp(self.mapping.button['B'])
+
 
         self.incoming = self.ser.read()
 
