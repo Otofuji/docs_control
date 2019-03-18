@@ -139,7 +139,7 @@ int main (void)
 	
 	while(1) {
 		if(pio_get(PIOA, PIO_INPUT, PIO_PA11) == 0) {
-			button1 = '1';
+			button1 = '7';
 		} else {
 			button1 = '0';
 		}
@@ -148,5 +148,8 @@ int main (void)
 		usart_write(UART_COMM, button1);
 		while(!usart_is_tx_ready(UART_COMM));
 		usart_write(UART_COMM, eof);
+		if(button1!='0'){
+			delay_ms(200);
+		}
 	}
 }
