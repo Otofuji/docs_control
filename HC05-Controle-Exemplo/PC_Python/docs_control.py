@@ -38,30 +38,29 @@ class SerialControllerInterface:
         logging.debug("Received DATA: {}".format(data))
 
         if data == b'1' and self.bs == 0:
-            if self.a==0:
-                func.listaNumerada()
-            elif self.a==1:
-                func.bullet()
-            elif self.a==2:
-                func.comentario()
-            elif self.a==3:
-                func.notaRodape()
-            elif self.a==4:
-                func.historicoDeRevisoes()
-            elif self.a==5:
-                func.ditado()
-            elif self.a==6:
-                func.equation()
-            elif self.a==7:
-                func.gerarPDF()
-            elif self.a==8:
-                func.enviarEmailParaColaboradores()
-            elif self.a==9:
-                func.inserirImagem()
-            elif self.a==10:
-                func.enviarPDFporEmail()
-            elif self.a==11:
-                func.publicarNaWeb()
+            func.listaNumerada()
+        elif data == b'2' and self.bs == 0:
+            func.bullet()
+        elif data == b'3' and self.bs == 0:
+            func.comentario()
+        elif data == b'4' and self.bs == 0:
+            func.notaRodape()
+        elif data == b'5' and self.bs == 0:
+            func.historicoDeRevisoes()
+        elif data == b'6' and self.bs == 0:
+            func.ditado()
+        elif data == b'7' and self.bs == 0:
+            func.equation()
+        elif data == b'8' and self.bs == 0:
+            func.gerarPDF()
+        elif data == b'9' and self.bs == 0:
+            func.enviarEmailParaColaboradores()
+        elif data == b'a' and self.bs == 0:
+            func.inserirImagem()
+        elif data == b'b' and self.bs == 0:
+            func.enviarPDFporEmail()
+        elif data == b'c' and self.bs == 0:
+            func.publicarNaWeb()
 
             self.bs = 200
             self.a+=1
